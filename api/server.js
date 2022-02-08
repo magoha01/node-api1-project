@@ -87,7 +87,7 @@ server.put("/api/users/:id", async (req, res) => {
 
 server.delete("/api/users/:id", (req, res) => {
   const { id } = req.params;
-  User.delete(id)
+  User.remove(id)
     .then((deletedUser) => {
       if (!deletedUser) {
         res.status(404).json({
