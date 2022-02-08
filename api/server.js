@@ -10,6 +10,7 @@ server.get("/hello", (req, res) => {
   res.json({ message: "hello" });
 });
 
+//GET all users
 server.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
@@ -17,6 +18,26 @@ server.get("/api/users", async (req, res) => {
   } catch (err) {
     res.status(500).json({
       message: "Error fetching all users",
+      error: err.message,
+    });
+  }
+});
+
+//GET user by id
+
+server.get("/api/users/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      res.status(404).json({
+        message: "The user with the specified ID does not exist",
+      });
+    } else {
+      res.json(user);
+    }
+  } catch (err) {
+    res.status(500).json({
+      message: "The user information could not be retrieved",
       error: err.message,
     });
   }
